@@ -73,14 +73,14 @@ class Instructors extends React.Component {
     return name.map((item) => {
       if (item !== 'STAFF') {
         return (
-          <div
+          <Typography
             style={rmpStyle}
             onClick={(e) => {
               this.redirect(e, item);
             }}
           >
             {item}
-          </div>
+          </Typography>
         );
       } else return item;
     });

@@ -124,7 +124,7 @@ class ScheduleAddSelector extends Component {
 
   disableTBA = () => {
     let test = false;
-    for (const element of this.props.section.meetings[0]) {
+    for (const element of this.props.section.SecMeeting.Meetings[0].SecDays) {
       if (element === 'TBA') {
         test = true;
         break;
@@ -175,7 +175,7 @@ class ScheduleAddSelector extends Component {
     return (
       <Fragment>
         <tr className={classes.tr}>
-          <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
+          {/* <td style={{ verticalAlign: 'middle', textAlign: 'center' }}>
             <IconButton
               onClick={this.handleAddCurrent}
               style={{ cursor: 'pointer', padding: 0 }}
@@ -209,7 +209,7 @@ class ScheduleAddSelector extends Component {
                 Add to all
               </MenuItem>
             </Menu>
-          </td>
+          </td> */}
           <Tooltip
             title="Click to copy course code"
             placement="bottom"
@@ -220,27 +220,27 @@ class ScheduleAddSelector extends Component {
               onClick={(e) => this.clickToCopy(e, section.classCode)}
               className={classes.code}
             >
-              {section.classCode}
+              {section.ClassCode}
             </td>
           </Tooltip>
-          <td className={classes.multiline + ' ' + classes[section.classType]}>
-            {`${section.classType}
-Sec: ${section.sectionCode}
-Units: ${section.units}`}
+          <td className={classes.multiline + ' ' + classes[section.ClassType]}>
+            {`${section.ClassType}
+Sec: ${section.SectionCode}
+Units: ${section.Units}`}
           </td>
-          <td className={classes.multiline}>
+          {/* <td className={classes.multiline}>
             <Instructors
               destination={this.props.destination}
               className={classes.multiline}
             >
-              {section.instructors}
+              {section.SecInstructor.Instructors}
             </Instructors>
+          </td> */}
+          <td className={classes.multiline}>
+            {section.SecMeeting.Meetings[0].SecDays}
           </td>
           <td className={classes.multiline}>
-            {section.meetings.map((meeting) => meeting[0]).join('\n')}
-          </td>
-          <td className={classes.multiline}>
-            {section.meetings.map((meeting) => {
+            {/* {section.SecMeeting.Meetings[0].map((meeting) => {
               return meeting[1] !== 'ON LINE' && meeting[1] !== 'TBA' ? (
                 <Fragment>
                   <a
@@ -264,37 +264,37 @@ Units: ${section.units}`}
                   <br />
                 </Fragment>
               );
-            })}
+            })} */}
           </td>
           <td>
             <MouseOverPopover
               className={
-                classes.multiline + ' ' + classes[section.status.toLowerCase()]
+                classes.multiline + ' ' + classes[section.Status.toLowerCase()]
               }
             >
-              <strong>{`${section.numCurrentlyEnrolled[0]} / ${
-                section.maxCapacity
+              <strong>{`${section.SecEnrollment.NumCurrentlyEnrolled} / ${
+                section.SecEnrollment.MaxCapacity
               }`}</strong>
               {`
-WL: ${section.numOnWaitlist}
-NOR: ${section.numNewOnlyReserved}`}
+WL: ${section.SecEnrollment.NumOnWaitlist}
+NOR: ${section.SecEnrollment.NumNewOnlyReserved}`}
             </MouseOverPopover>
           </td>
           <td>
-            <RstrPopover restrictions={section.restrictions} />
+            <RstrPopover restrictions={section.Restrictions} />
           </td>
-          <td className={classes[section.status.toLowerCase()]}>
-            {this.statusforFindingSpot(section.status, section.classCode)}
-          </td>
+          {/* <td className={classes[section.Status.toLowerCase()]}>
+            {this.statusforFindingSpot(section.Status, section.ClassCode)}
+          </td> */}
         </tr>
-        <Snackbar
+        {/* <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           open={this.state.snacking}
           autoHideDuration={3000}
           onClose={() => this.setState({ snacking: false })}
           ContentProps={{ 'aria-describedby': 'message-id' }}
           message={<span id="message-id">{this.state.message}</span>}
-        />
+        /> */}
       </Fragment>
     );
   }
@@ -303,7 +303,7 @@ NOR: ${section.numNewOnlyReserved}`}
 class MiniSectionTable extends Component {
   constructor(props) {
     super(props);
-    this.state = { sectionInfo: this.props.courseDetails.sections };
+    this.state = { sectionInfo: this.props.courseDetails.Sections };
   }
 
   // shouldComponentUpdate(nextProps, nextState, nextContext) {
@@ -346,7 +346,6 @@ class MiniSectionTable extends Component {
 
   render() {
     const { classes } = this.props;
-
     return (
       <Fragment>
         <div
@@ -354,19 +353,19 @@ class MiniSectionTable extends Component {
             display: 'inline-flex',
           }}
         >
-          <POPOVER
+          {/* <POPOVER
             name={this.props.name}
             courseDetails={this.props.courseDetails}
-          />
+          /> */}
 
           <Typography variant="title" style={{ flexGrow: '2' }}>
             &nbsp;
           </Typography>
 
-          <AlmanacGraphWrapped
+          {/* <AlmanacGraphWrapped
             term={this.props.term}
             courseDetails={this.props.courseDetails}
-          />
+          /> */}
 
           <Typography variant="title" style={{ flexGrow: '2' }}>
             &nbsp;
@@ -390,15 +389,15 @@ class MiniSectionTable extends Component {
         <table className={classes.table}>
           <thead>
             <tr>
-              <th>Add</th>
+              {/* <th>Add</th> */}
               <th>Code</th>
               <th>Type</th>
-              <th>Instructors</th>
+              {/* <th>Instructors</th> */}
               <th>Times</th>
               <th>Places</th>
               <th>Enrollment</th>
               <th>Rstr</th>
-              <th>Status</th>
+              {/* <th>Status</th> */}
             </tr>
           </thead>
           <tbody>

@@ -128,10 +128,12 @@ class AlmanacGraph extends Component {
           <Paper className={this.props.classes.paper}>
             <Typography variant="title" className={this.props.classes.flex}>
               {'Historical Enrollments for ' +
-                this.props.courseDetails.name[0] +
-                ' ' +
-                this.props.courseDetails.name[1] +
-                '   '}
+                this.props.courseDetails.CourseNumber+
+                ' '
+                //  +
+                // this.props.courseDetails.name[1] +
+                // '   '
+                }
               <Tooltip title="Need Help with Graphs?">
                 <a
                   href="https://www.ics.uci.edu/~rang1/AntAlmanac/index.html#support"

@@ -62,7 +62,7 @@ class CourseRenderPane extends Component {
   };
 
   getGrid(SOCObject) {
-    if ('departments' in SOCObject) {
+    if ('Departments' in SOCObject) {
       return (
         // <SchoolDeptCard
         //   comment={SOCObject.comment}
@@ -71,11 +71,12 @@ class CourseRenderPane extends Component {
         // />
         <Fragment />
       );
-    } else if ('courses' in SOCObject) {
+    } else if ('Courses' in SOCObject) {
+
       return (
         <SchoolDeptCard
-          name={'Department of ' + SOCObject.name[1]}
-          comment={SOCObject.comments.join('\n')}
+          name={'Department of ' + SOCObject.Name}
+          comment={SOCObject.DepartmentComment +SOCObject.CourseCodeRangeComment+SOCObject.CourseNumberNangeComment}
           type={'dept'}
         />
       );
@@ -102,11 +103,9 @@ class CourseRenderPane extends Component {
           <MiniSectionTable
             currentScheduleIndex={this.props.currentScheduleIndex}
             name={
-              SOCObject.name[0] +
-              ' ' +
-              SOCObject.name[1] +
+              SOCObject.CourseNumber +
               ' | ' +
-              SOCObject.name[2]
+              SOCObject.CourseTitle
             }
             formData={this.props.formData}
             courseDetails={SOCObject}
