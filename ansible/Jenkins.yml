@@ -1,0 +1,18 @@
+---
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: get jenkins WAR
+      get_url:
+        url: http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+        dest: ~/jenkins.war
+    - name: install java
+      yum:
+        name: java-1.8.0-openjdk
+        state: present
+    # would be better to register the service with SystemD, but this is fine.
+    # it'll be idempotent since it'll fail to bind to the port the second time+
+    - name: run jenkins
+      shell: nohup java -jar ~/jenkins.war &
+
