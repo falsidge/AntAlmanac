@@ -1,26 +1,24 @@
-import React from 'react';
-import Downshift from 'mui-downshift';
+import React, { Component } from 'react';
 import depts from './depts';
-import { isMobile } from 'react-device-detect';
+import Select from 'react-select';
 
-class DeptSearchBar extends React.Component {
+class DeptSearchBar extends Component {
   constructor(props) {
     super(props);
-    this.state = { filteredItems: depts }; // Inital state is the whole list of depts
+    const inputStarter = props.label === null ? '' : props.label;
+    this.state = {
+      inputVal: inputStarter,
+    };
+    // this.state = { filteredItems: depts }; // Inital state is the whole list of depts
     this.handleStateChange = this.handleStateChange.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState, nextContext) {
-    return nextState !== this.state;
-  }
-
-  determineDropdownLength() {
-    if (isMobile) {
-      return 3;
+    if (nextProps !== this.props && nextProps.dept === null) {
+      this.setState({ inputVal: '' });
+      console.log('here to reset');
     }
-    // return document.documentElement.scrollHeight
-    // - 96 - 24;
-    return 6;
+    return nextState !== this.state || nextProps !== this.props;
   }
 
   handleStateChange(changes) {
@@ -33,26 +31,21 @@ class DeptSearchBar extends React.Component {
     }
   }
 
-  defautlRen = () => {
-    return { label: this.props.dept, value: 0 };
+  changeInput = (newInput, action) => {
+    this.setState({ inputVal: newInput });
   };
 
   render() {
+    console.log(this.props.dept);
     return (
-      <Downshift
-        items={this.state.filteredItems}
-        onStateChange={this.handleStateChange}
-        defaultSelectedItem={this.defautlRen()}
+      <Select
+        options={depts}
+        isSearchable
+        isClearable
+        defaultValue={this.props.dept}
         onChange={this.props.setDept}
-        getInputProps={() => ({
-          // Downshift requires this syntax to pass down these props to the text field
-          label: 'Department',
-          required: true,
-        })}
-        //getInputProps={() => <input />}
-        menuItemCount={this.determineDropdownLength()}
-        // menuHeight={this.determineDropdownLength()}
-        {...this.props} //Pass down other props to the Downshift layer
+        inputValue={this.state.inputVal}
+        onInputChange={this.changeInput}
       />
     );
   }

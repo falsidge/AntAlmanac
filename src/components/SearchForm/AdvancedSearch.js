@@ -13,25 +13,22 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = {
   courseNum: {
     borderStyle: 'solid',
-    borderWidth: '0px 8px 8px 0px',
+    borderWidth: '8px 8px 8px 0px',
     borderColor: 'transparent',
   },
   courseCode: {
     border: 'solid 8px transparent',
     borderLeft: '0px',
-    borderTop: '0px',
   },
   instructor: {
     border: 'solid 8px transparent',
     borderLeft: '0px',
-    borderTop: '0px',
     minWidth: '120px',
     flexBasis: '120px',
   },
   units: {
     border: 'solid 8px transparent',
     borderLeft: '0px',
-    borderTop: '0px',
     minWidth: '80px',
     flexBasis: '80px',
   },
