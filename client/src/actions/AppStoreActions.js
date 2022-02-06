@@ -18,6 +18,9 @@ import {
 } from '@material-ui/core/colors';
 import { getCoursesData } from '../helpers';
 import { LOAD_DATA_ENDPOINT, SAVE_DATA_ENDPOINT } from '../api/endpoints';
+import { Magic, RPCError, RPCErrorCode } from 'magic-sdk';
+
+const m = new Magic('pk_live_14BF4F1546CA8158');
 
 const arrayOfColors = [
     red[500],
@@ -191,6 +194,44 @@ export const loadSchedule = async (userID, rememberMe) => {
                 openSnackbar('error', `Couldn't find schedules for username "${userID}".`);
             }
         }
+    }
+};
+
+export const login = async (email, rememberMe) => {
+    try {
+        const req = m.auth.loginWithMagicLink({ email: email, showUI: false });
+        req.on('email-sent', () => {
+            openSnackbar('success', `Email sent! Login by clicking link in email`);
+        }).once('email-not-deliverable', () => {
+            openSnackbar('error', `Email not deliverable`);
+            return false;
+        });
+        await req;
+        openSnackbar('success', `Login successful.`);
+        return true;
+    } catch (err) {
+        if (err instanceof RPCError) {
+            switch (err.code) {
+                case RPCErrorCode.MagicLinkFailedVerification:
+                case RPCErrorCode.MagicLinkExpired:
+                case RPCErrorCode.MagicLinkRateLimited:
+                case RPCErrorCode.UserAlreadyLoggedIn:
+                    // Handle errors accordingly :)
+                    openSnackbar('error', err.message);
+                    return false;
+            }
+        }
+    }
+};
+
+export const logout = async () => {
+    try {
+        await m.user.logout();
+        openSnackbar('success', 'Logout successful.');
+        return true;
+    } catch (err) {
+        openSnackbar('error', err.message);
+        return false;
     }
 };
 

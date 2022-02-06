@@ -29,6 +29,7 @@
         ]
     },
     "dependencies": {
-        "aws-sdk": "^2.1069.0"
+        "aws-sdk": "^2.1069.0",
+        "magic-sdk": "^8.0.1"
     }
 }
